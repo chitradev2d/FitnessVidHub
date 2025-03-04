@@ -8,6 +8,17 @@ interface VideoCardProps {
 }
 
 export function VideoCard({ video }: VideoCardProps) {
+  // Early return if video object is not properly loaded
+  if (!video || !video.stats) {
+    return (
+      <Card className="overflow-hidden">
+        <CardContent className="p-4">
+          <p>Loading video data...</p>
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <Card className="overflow-hidden">
       <CardHeader className="p-0">
@@ -25,13 +36,13 @@ export function VideoCard({ video }: VideoCardProps) {
           </Button>
         </div>
         <div className="text-sm text-muted-foreground">
-          <p>{video.stats.views.toLocaleString()} views</p>
-          <p>{video.stats.duration}</p>
+          <p>{video.stats?.views?.toLocaleString() || 0} views</p>
+          <p>{video.stats?.duration || '0:00'}</p>
         </div>
         <div className="mt-2">
           <h4 className="text-sm font-medium">Expected Outcomes:</h4>
           <ul className="text-sm text-muted-foreground">
-            {video.outcomes.map((outcome, i) => (
+            {video.outcomes?.map((outcome, i) => (
               <li key={i}>{outcome}</li>
             ))}
           </ul>

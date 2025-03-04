@@ -7,16 +7,20 @@ import { VideoGrid } from "@/components/video/VideoGrid";
 export default function MuscleGroupPage() {
   const { id } = useParams<{ id: string }>();
 
-  const { data: muscleGroup } = useQuery<MuscleGroup>({
-    queryKey: ["/api/muscle-groups", id],
+  const { data: muscleGroup, isLoading: isLoadingGroup } = useQuery<MuscleGroup>({
+    queryKey: [`/api/muscle-groups/${id}`],
   });
 
-  const { data: videos } = useQuery<Video[]>({
-    queryKey: ["/api/muscle-groups", id, "videos"],
+  const { data: videos, isLoading: isLoadingVideos } = useQuery<Video[]>({
+    queryKey: [`/api/muscle-groups/${id}/videos`],
   });
+
+  if (isLoadingGroup || isLoadingVideos) {
+    return <div className="container mx-auto p-4">Loading...</div>;
+  }
 
   if (!muscleGroup || !videos) {
-    return <div>Loading...</div>;
+    return <div className="container mx-auto p-4">No data available</div>;
   }
 
   return (
