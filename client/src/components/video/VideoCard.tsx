@@ -1,13 +1,16 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Heart } from "lucide-react";
+import { Heart, PlayCircle } from "lucide-react";
 import type { Video } from "@shared/schema";
+import { useState } from "react";
 
 interface VideoCardProps {
   video: Video;
 }
 
 export function VideoCard({ video }: VideoCardProps) {
+  const [isPlaying, setIsPlaying] = useState(false);
+
   // Early return if video object is not properly loaded
   if (!video || !video.stats) {
     return (
@@ -21,12 +24,34 @@ export function VideoCard({ video }: VideoCardProps) {
 
   return (
     <Card className="overflow-hidden">
-      <CardHeader className="p-0">
-        <img
-          src={video.thumbnailUrl}
-          alt={video.title}
-          className="w-full h-48 object-cover"
-        />
+      <CardHeader className="p-0 relative">
+        {isPlaying ? (
+          <iframe
+            width="100%"
+            height="200"
+            src={`https://www.youtube.com/embed/${video.videoId}?autoplay=1`}
+            title={video.title}
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        ) : (
+          <>
+            <img
+              src={video.thumbnailUrl}
+              alt={video.title}
+              className="w-full h-48 object-cover"
+            />
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="absolute inset-0 m-auto w-12 h-12 rounded-full bg-black/50 hover:bg-black/70"
+              onClick={() => setIsPlaying(true)}
+            >
+              <PlayCircle className="h-8 w-8 text-white" />
+            </Button>
+          </>
+        )}
       </CardHeader>
       <CardContent className="p-4">
         <div className="flex justify-between items-start mb-2">
