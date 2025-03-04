@@ -1,4 +1,5 @@
 import { MuscleGroup, Video, InsertMuscleGroup, InsertVideo } from "@shared/schema";
+import { mockMuscleGroups, generateInitialVideos } from "../shared/lib/data";
 
 export interface IStorage {
   getMuscleGroups(): Promise<MuscleGroup[]>;
@@ -39,49 +40,15 @@ export class MemStorage implements IStorage {
   }
 
   private initializeData() {
-    // Initialize with mock data
-    const muscleGroups: InsertMuscleGroup[] = [
-      {
-        name: "Chest",
-        description: "Pectoralis Major exercises",
-        imageUrl: "https://images.unsplash.com/photo-1502444330042-d1a1ddf9bb5b"
-      },
-      {
-        name: "Back",
-        description: "Latissimus Dorsi and Trapezius exercises",
-        imageUrl: "https://images.unsplash.com/photo-1498661694102-0a3793edbe74"
-      },
-      // Add more muscle groups...
-    ];
-
-    muscleGroups.forEach((group, index) => {
+    // Initialize muscle groups
+    mockMuscleGroups.forEach((group: InsertMuscleGroup, index: number) => {
       this.muscleGroups.set(index + 1, { ...group, id: index + 1 });
     });
 
-    // Add mock videos for each muscle group
-    let videoId = 1;
-    Array.from(this.muscleGroups.values()).forEach((group) => {
-      for (let i = 0; i < 5; i++) {
-        const video: Video = {
-          id: videoId++,
-          title: `${group.name} Workout ${i + 1}`,
-          description: `Complete ${group.name.toLowerCase()} workout routine`,
-          thumbnailUrl: "https://images.unsplash.com/photo-1518611012118-696072aa579a",
-          videoId: `mock-${group.id}-${i}`,
-          muscleGroupId: group.id,
-          stats: {
-            views: Math.floor(Math.random() * 1000000),
-            likes: Math.floor(Math.random() * 50000),
-            duration: "10:00"
-          },
-          outcomes: [
-            "Muscle strength",
-            "Improved endurance",
-            "Better flexibility"
-          ]
-        };
-        this.videos.set(video.id, video);
-      }
+    // Initialize videos
+    const videos = generateInitialVideos();
+    videos.forEach((video: InsertVideo, index: number) => {
+      this.videos.set(index + 1, { ...video, id: index + 1 });
     });
   }
 }

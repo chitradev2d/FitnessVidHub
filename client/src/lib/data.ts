@@ -59,27 +59,101 @@ export const mockMuscleGroups: InsertMuscleGroup[] = [
 ];
 
 const demoThumbnails = [
-  "https://images.unsplash.com/photo-1518611012118-696072aa579a",
-  "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5",
-  "https://images.unsplash.com/photo-1518459031867-a89b944bffe4",
-  "https://images.unsplash.com/photo-1486739985386-d4fae04ca6f7",
-  "https://images.unsplash.com/photo-1483721310020-03333e577078"
+  "https://img.youtube.com/vi/oo0bZ6Vrepg/maxresdefault.jpg",
+  "https://img.youtube.com/vi/58gI3jXNnPI/maxresdefault.jpg",
+  "https://img.youtube.com/vi/xvv_K1CeEEo/maxresdefault.jpg",
+  "https://img.youtube.com/vi/_pxX2gq5t4g/maxresdefault.jpg",
+  "https://img.youtube.com/vi/dPb9JxFMuuE/maxresdefault.jpg"
 ];
 
 function generateMockVideos(muscleGroupId: number, groupName: string): InsertVideo[] {
-  const workoutTypes = [
-    "Complete Workout",
-    "Beginner Guide",
-    "Advanced Routine",
-    "Quick Burn",
-    "Power Session"
-  ];
+  const videoData: Record<string, Array<{ title: string, videoId: string }>> = {
+    "Chest": [
+      { title: "8 Best Chest Exercises YOU Should Be Doing", videoId: "oo0bZ6Vrepg" },
+      { title: "25 Minute Dumbbell Complete Chest Workout", videoId: "xvv_K1CeEEo" },
+      { title: "The PERFECT Science Based Chest Workout (2025 EDITION)", videoId: "zD266B2jk0s" },
+      { title: "The Chest Workout (MOST EFFECTIVE!)", videoId: "dPb9JxFMuuE" },
+      { title: "The PERFECT Chest Workout (Sets and Reps Included)", videoId: "89e518dl4I8" }
+    ],
+    "Back": [
+      { title: "Major Muscle Groups Of The Human Body - Back Focus", videoId: "58gI3jXNnPI" },
+      { title: "Complete Back Workout with Pull-ups", videoId: "_pxX2gq5t4g" },
+      { title: "The Perfect Deadlift Form", videoId: "dPb9JxFMuuE" },
+      { title: "Lat Pulldown Tutorial", videoId: "89e518dl4I8" },
+      { title: "Row Variations for Back Development", videoId: "ykQlXirszbo" }
+    ],
+    "Shoulders": [
+      { title: "Shoulder Workout - Build Bigger Shoulders", videoId: "oo0bZ6Vrepg" },
+      { title: "Shoulder Press Variations", videoId: "xvv_K1CeEEo" },
+      { title: "The Best Shoulder Workout for Mass", videoId: "zD266B2jk0s" },
+      { title: "Overhead Press Tutorial", videoId: "dPb9JxFMuuE" },
+      { title: "Lateral Raise Variations", videoId: "89e518dl4I8" }
+    ],
+    "Biceps": [
+      { title: "Bicep Curls - Build Bigger Biceps", videoId: "oo0bZ6Vrepg" },
+      { title: "Bicep Workout - Full Body", videoId: "xvv_K1CeEEo" },
+      { title: "Hammer Curl Variations", videoId: "zD266B2jk0s" },
+      { title: "Concentration Curl Tutorial", videoId: "dPb9JxFMuuE" },
+      { title: "Bicep Cable Exercises", videoId: "89e518dl4I8" }
+    ],
+    "Triceps": [
+      { title: "Tricep Dips - Build Bigger Triceps", videoId: "oo0bZ6Vrepg" },
+      { title: "Tricep Workout - Full Body", videoId: "xvv_K1CeEEo" },
+      { title: "Skullcrusher Variations", videoId: "zD266B2jk0s" },
+      { title: "Overhead Tricep Extension Tutorial", videoId: "dPb9JxFMuuE" },
+      { title: "Tricep Cable Exercises", videoId: "89e518dl4I8" }
+    ],
+    "Forearms": [
+      { title: "Forearm Exercises - Improve Grip Strength", videoId: "oo0bZ6Vrepg" },
+      { title: "Wrist Curls - Full Body", videoId: "xvv_K1CeEEo" },
+      { title: "Reverse Wrist Curl Variations", videoId: "zD266B2jk0s" },
+      { title: "Farmers Walk Tutorial", videoId: "dPb9JxFMuuE" },
+      { title: "Forearm Strength Exercises", videoId: "89e518dl4I8" }
+    ],
+    "Abs": [
+      { title: "Abdominal Exercises - Build Stronger Abs", videoId: "oo0bZ6Vrepg" },
+      { title: "Plank Variations", videoId: "xvv_K1CeEEo" },
+      { title: "Crunches - Full Body", videoId: "zD266B2jk0s" },
+      { title: "Leg Raises Tutorial", videoId: "dPb9JxFMuuE" },
+      { title: "Russian Twists - Full Body", videoId: "89e518dl4I8" }
+    ],
+    "Quadriceps": [
+      { title: "Quad Exercises - Build Stronger Legs", videoId: "oo0bZ6Vrepg" },
+      { title: "Squat Variations", videoId: "xvv_K1CeEEo" },
+      { title: "Leg Press - Full Body", videoId: "zD266B2jk0s" },
+      { title: "Lunges Tutorial", videoId: "dPb9JxFMuuE" },
+      { title: "Leg Extensions - Full Body", videoId: "89e518dl4I8" }
+    ],
+    "Hamstrings": [
+      { title: "Hamstring Curls - Build Stronger Legs", videoId: "oo0bZ6Vrepg" },
+      { title: "Romanian Deadlifts", videoId: "xvv_K1CeEEo" },
+      { title: "Good Mornings - Full Body", videoId: "zD266B2jk0s" },
+      { title: "Hamstring Stretches Tutorial", videoId: "dPb9JxFMuuE" },
+      { title: "Glute-Ham Raises - Full Body", videoId: "89e518dl4I8" }
+    ],
+    "Glutes": [
+      { title: "Glute Bridges - Build Stronger Glutes", videoId: "oo0bZ6Vrepg" },
+      { title: "Hip Thrust Variations", videoId: "xvv_K1CeEEo" },
+      { title: "Donkey Kicks - Full Body", videoId: "zD266B2jk0s" },
+      { title: "Glute Stretches Tutorial", videoId: "dPb9JxFMuuE" },
+      { title: "Cable Kickbacks - Full Body", videoId: "89e518dl4I8" }
+    ],
+    "Calves": [
+      { title: "Calf Raises - Build Stronger Calves", videoId: "oo0bZ6Vrepg" },
+      { title: "Seated Calf Raises", videoId: "xvv_K1CeEEo" },
+      { title: "Standing Calf Raises - Full Body", videoId: "zD266B2jk0s" },
+      { title: "Calf Stretches Tutorial", videoId: "dPb9JxFMuuE" },
+      { title: "Calf Exercises - Full Body", videoId: "89e518dl4I8" }
+    ]
+  };
 
-  return workoutTypes.map((type, index) => ({
-    title: `${groupName} ${type}`,
-    description: `A comprehensive ${groupName.toLowerCase()} workout suitable for all levels`,
-    thumbnailUrl: demoThumbnails[index],
-    videoId: `mock-${muscleGroupId}-${index}`,
+  const muscleVideos = videoData[groupName] || Array(5).fill({ title: `${groupName} Workout`, videoId: "default" });
+
+  return muscleVideos.map((video, index) => ({
+    title: video.title,
+    description: `A comprehensive ${groupName.toLowerCase()} workout routine for strength and definition`,
+    thumbnailUrl: `https://img.youtube.com/vi/${video.videoId}/maxresdefault.jpg`,
+    videoId: video.videoId,
     muscleGroupId,
     stats: {
       views: Math.floor(Math.random() * 1000000) + 50000,
@@ -97,7 +171,7 @@ function generateMockVideos(muscleGroupId: number, groupName: string): InsertVid
 }
 
 export function generateInitialVideos(): InsertVideo[] {
-  return mockMuscleGroups.flatMap((group, index) => 
+  return mockMuscleGroups.flatMap((group, index) =>
     generateMockVideos(index + 1, group.name)
   );
 }
